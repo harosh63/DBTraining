@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31025.194
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBTraining", "DBTraining.csproj", "{0098CBB6-F950-4719-A028-401E841AF93F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0098CBB6-F950-4719-A028-401E841AF93F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0098CBB6-F950-4719-A028-401E841AF93F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0098CBB6-F950-4719-A028-401E841AF93F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0098CBB6-F950-4719-A028-401E841AF93F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {97210169-BF00-4931-B6B8-9E5CAD86A952}
+	EndGlobalSection
+EndGlobal
