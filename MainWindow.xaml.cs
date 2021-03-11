@@ -23,6 +23,7 @@ namespace DBTraining
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = new ViewModel.DBTraining_VM();
         }
     }
 }
