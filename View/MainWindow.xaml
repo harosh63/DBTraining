@@ -33,8 +33,9 @@
         </DataGrid>
         <StackPanel Orientation="Horizontal" Grid.Row="1" >
             <Button Content="Загрузить" Command="{Binding LoadDB_Command}"/>
-            <Button Content="Удалить" Command="{Binding RowDel_Command}"/>
             <Button Content="Добавить" Command="{Binding RowAdd_Command}"/>
+            <Button Content="Удалить" Command="{Binding RowDel_Command}"/>
+
         </StackPanel> 
     </Grid>
 </Window>
