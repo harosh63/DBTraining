@@ -6,31 +6,26 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Oracle.DataAccess.Client;
-using Oracle.DataAccess.Types;
-using Oracle.VsDevTools;
+using DBTraining.Model;
+using Oracle.ManagedDataAccess.Client;
+using Oracle.ManagedDataAccess.Types;
+
+
 
 namespace DBTraining.ViewModel
 {
     class DBTraining_VM : INotifyPropertyChanged
     {
-        OracleConnection con;
-        //void Connect()
-        //{
-        //    con = new OracleConnection();
-        //    con.ConnectionString = "User ID=ONLYBBQ; Password=PSWRD123; Data Source=localhost:1521/XEPDB1";
-        //    con.Open();
-        //    Console.WriteLine("Connected: " + con.ServerVersion);
-        //}
-        //public DBTraining_VM()
-        //{
-        //    Connect();
-            
-        //}
+        public DBTraining_VM()
+        {
+            LoadDB_Command = new DelegateCommand(LoadDB);
+            RowDel_Command = new DelegateCommand(RowDel);
+            RowAdd_Command = new DelegateCommand(RowAdd);
+        }
 
-        private ObservableCollection<Model.DBTraining_Model> peoples =
-            new ObservableCollection<Model.DBTraining_Model>();
-        public ObservableCollection<Model.DBTraining_Model> Peoples
+        private ObservableCollection<DBTraining_Model> peoples =
+            new ObservableCollection<DBTraining_Model>();
+        public ObservableCollection<DBTraining_Model> Peoples
         {
             get => peoples;
             set
@@ -40,14 +35,88 @@ namespace DBTraining.ViewModel
             }
         }
 
-        private void LoadDB()
+        private DBTraining_Model selectedItem;
+        public DBTraining_Model SelectedItem
         {
-            peoples.Add(new Model.DBTraining_Model
+            get => selectedItem;
+            set
             {
-
-            });
+                selectedItem = value;
+                OnPropertyChanged("SelectedItem");
+            }
         }
+        
+        public DelegateCommand RowAdd_Command { get; set; }
+        private void RowAdd(object obj)
+        {
+            string oradb = "User ID=ONLYBBQ;Data Source=localhost:1521/XEPDB1;Password=PSWRD123;";
+            OracleConnection con = new OracleConnection();
+            con.ConnectionString = oradb;
+            con.Open();
+            OracleCommand cmd = new OracleCommand
+            {
+                CommandText = "insert into example (fio,age,adress,datetime) values ('ddd',123,'asd',Current_date)",
+                Connection = con
+            };
+            OracleDataReader dr = cmd.ExecuteReader();
+            con.Close();
+            con.Dispose();
 
+            LoadDB(obj);
+        }
+        public DelegateCommand RowDel_Command { get; set; }
+        private void RowDel(object obj)
+        {
+            string oradb = "User ID=ONLYBBQ;Data Source=localhost:1521/XEPDB1;Password=PSWRD123;";
+            OracleConnection con = new OracleConnection();
+            con.ConnectionString = oradb;
+            con.Open();
+            OracleCommand cmd = new OracleCommand
+            {
+                CommandText = "delete from example where age=123",
+                Connection = con
+            };
+            OracleDataReader dr = cmd.ExecuteReader();
+            con.Close();
+            con.Dispose();
+
+            LoadDB(obj);
+
+        }
+        public DelegateCommand LoadDB_Command { get; set; }
+        private void LoadDB(object obj)
+        {
+            
+            string oradb = "User ID=ONLYBBQ;Data Source=localhost:1521/XEPDB1;Password=PSWRD123;";
+            OracleConnection con = new OracleConnection();
+            con.ConnectionString = oradb;
+            con.Open();
+            OracleCommand cmd = new OracleCommand
+            {
+                CommandText = "select * from example",
+                Connection = con
+            };
+            OracleDataReader dr = cmd.ExecuteReader();
+            if (dr.HasRows)
+            {
+                while (dr.Read())
+                {
+                    //Console.WriteLine(dr);
+                    peoples.Add(new Model.DBTraining_Model
+                    {
+                        Fio = dr["Fio"].ToString(),
+                        Age = Int32.Parse(dr["Age"].ToString()),
+                        Adress = dr["Adress"].ToString(),
+                        Date = Convert.ToDateTime(dr["Datetime"])
+                    });
+                }
+            }
+            else
+            {
+            }
+            con.Close();
+            con.Dispose();
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged(string propertyName)

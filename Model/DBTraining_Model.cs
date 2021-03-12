@@ -11,5 +11,7 @@ namespace DBTraining.Model
         public string Fio { get; set; }
         public int Age { get; set; }
         public string Adress { get; set; }
+
+        public DateTime Date { get; set; }
     }
 }

@@ -22,16 +22,18 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <DataGrid Grid.Row="0" ItemsSource="{Binding Peoples}" AutoGenerateColumns="False">
+        <DataGrid Grid.Row="0" ItemsSource="{Binding Peoples}" AutoGenerateColumns="False" SelectedItem="{Binding SelectedItem}">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="ФИО"/>
-                <DataGridTextColumn Header="Возраст"/>
-                <DataGridTextColumn Header="Адрес"/>
+                <DataGridTextColumn Header="ФИО" Binding="{Binding Fio}"/>
+                <DataGridTextColumn Header="Возраст" Binding="{Binding Age}"/>
+                <DataGridTextColumn Header="Адрес" Binding="{Binding Adress}"/>
+                <DataGridTextColumn Header="Дата" Binding="{Binding Date}"/>
             </DataGrid.Columns>
         </DataGrid>
         <StackPanel Orientation="Horizontal" Grid.Row="1" >
-            <Button Content="Добавить"/>
-            <Button Content="Удалить"/>
-        </StackPanel>
+            <Button Content="Обновить" Command="{Binding LoadDB_Command}"/>
+            <Button Content="Удалить" Command="{Binding RowDel_Command}"/>
+            <Button Content="Добавить" Command="{Binding RowAdd_Command}"/>
+        </StackPanel> 
     </Grid>
 </Window>
