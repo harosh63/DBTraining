@@ -6,6 +6,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using DBTraining.Model;
 using Oracle.ManagedDataAccess.Client;
 using Oracle.ManagedDataAccess.Types;
@@ -21,6 +22,7 @@ namespace DBTraining.ViewModel
             LoadDB_Command = new DelegateCommand(LoadDB);
             RowDel_Command = new DelegateCommand(RowDel);
             RowAdd_Command = new DelegateCommand(RowAdd);
+            //RefreshDB_Command = new DelegateCommand(RefreshDB);
         }
 
         private ObservableCollection<DBTraining_Model> peoples =
@@ -43,6 +45,7 @@ namespace DBTraining.ViewModel
             {
                 selectedItem = value;
                 OnPropertyChanged("SelectedItem");
+                MessageBox.Show(selectedItem.Fio.ToString() + " " + selectedItem.Age.ToString() + " " + selectedItem.Adress.ToString() + " " + selectedItem.Date.ToString());
             }
         }
         
@@ -55,7 +58,7 @@ namespace DBTraining.ViewModel
             con.Open();
             OracleCommand cmd = new OracleCommand
             {
-                CommandText = "insert into example (fio,age,adress,datetime) values ('ddd',123,'asd',Current_date)",
+                CommandText = "insert into example (fio,age,adress,datetime, people_id) values ('ddd',123,'asd',Current_date, people_seq.NEXTVAL)",
                 Connection = con
             };
             OracleDataReader dr = cmd.ExecuteReader();
@@ -71,22 +74,26 @@ namespace DBTraining.ViewModel
             OracleConnection con = new OracleConnection();
             con.ConnectionString = oradb;
             con.Open();
-            OracleCommand cmd = new OracleCommand
-            {
-                CommandText = "delete from example where age=123",
-                Connection = con
-            };
+            OracleCommand cmd = new OracleCommand();
+            if (SelectedItem != null)
+                cmd.CommandText = "delete from example where people_id=" + selectedItem.ID;
+            else
+            { 
+                MessageBox.Show("Не выбрано строки для удаления");
+                return;
+            }
+            cmd.Connection = con;
             OracleDataReader dr = cmd.ExecuteReader();
             con.Close();
             con.Dispose();
-
             LoadDB(obj);
+            OnPropertyChanged("Peoples");
+
 
         }
         public DelegateCommand LoadDB_Command { get; set; }
         private void LoadDB(object obj)
         {
-            
             string oradb = "User ID=ONLYBBQ;Data Source=localhost:1521/XEPDB1;Password=PSWRD123;";
             OracleConnection con = new OracleConnection();
             con.ConnectionString = oradb;
@@ -101,8 +108,44 @@ namespace DBTraining.ViewModel
             {
                 while (dr.Read())
                 {
+                    peoples.Add(new DBTraining_Model
+                    {
+                        Fio = dr["Fio"].ToString(),
+                        Age = Int32.Parse(dr["Age"].ToString()),
+                        Adress = dr["Adress"].ToString(),
+                        Date = Convert.ToDateTime(dr["Datetime"]),
+                        ID = Int32.Parse(dr["people_id"].ToString())
+                    });
+                }
+            }
+            else
+            {
+            }
+            con.Close();
+            con.Dispose();
+        }
+
+
+        public DelegateCommand RefreshDB_Command { get; set; }
+        private void RefreshDB(object obj)
+        {
+            string oradb = "User ID=ONLYBBQ;Data Source=localhost:1521/XEPDB1;Password=PSWRD123;";
+            OracleConnection con = new OracleConnection();
+            con.ConnectionString = oradb;
+            con.Open();
+            OracleCommand cmd = new OracleCommand
+            {
+                CommandText = "select * from example",
+                Connection = con
+            };
+            OracleDataReader dr = cmd.ExecuteReader();
+            if (dr.HasRows)
+            {
+                while (dr.Read())
+                {
+                    peoples.Clear();
                     //Console.WriteLine(dr);
-                    peoples.Add(new Model.DBTraining_Model
+                    peoples.Add(new DBTraining_Model
                     {
                         Fio = dr["Fio"].ToString(),
                         Age = Int32.Parse(dr["Age"].ToString()),

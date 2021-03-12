@@ -13,5 +13,7 @@ namespace DBTraining.Model
         public string Adress { get; set; }
 
         public DateTime Date { get; set; }
+
+        public int ID { get; set; }
     }
 }
