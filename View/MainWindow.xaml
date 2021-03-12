@@ -35,7 +35,6 @@
             <Button Content="Загрузить" Command="{Binding LoadDB_Command}"/>
             <Button Content="Удалить" Command="{Binding RowDel_Command}"/>
             <Button Content="Добавить" Command="{Binding RowAdd_Command}"/>
-            <Button Content="Обновить" Command="{Binding RefreshDB_Command}"/>
         </StackPanel> 
     </Grid>
 </Window>
