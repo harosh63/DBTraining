@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using DBTraining.Model;
+using DBTraining.View;
 using Oracle.ManagedDataAccess.Client;
 using Oracle.ManagedDataAccess.Types;
 
@@ -17,6 +18,7 @@ namespace DBTraining.ViewModel
 {
     class DBTraining_VM : INotifyPropertyChanged
     {
+        DBAdd_view dbadd;
         public DBTraining_VM()
         {
             LoadDB_Command = new DelegateCommand(LoadDB);
@@ -50,19 +52,8 @@ namespace DBTraining.ViewModel
         public DelegateCommand RowAdd_Command { get; set; }
         private void RowAdd(object obj)
         {
-            string oradb = "User ID=ONLYBBQ;Data Source=localhost:1521/XEPDB1;Password=PSWRD123;";
-            OracleConnection con = new OracleConnection();
-            con.ConnectionString = oradb;
-            con.Open();
-            OracleCommand cmd = new OracleCommand
-            {
-                CommandText = "insert into example (fio,age,adress,datetime, people_id) values ('ddd',123,'asd',Current_date, people_seq.NEXTVAL)",
-                Connection = con
-            };
-            OracleDataReader dr = cmd.ExecuteReader();
-            con.Close();
-            con.Dispose();
-
+            dbadd = new DBAdd_view();
+            dbadd.ShowDialog();
             LoadDB(obj);
         }
         public DelegateCommand RowDel_Command { get; set; }
