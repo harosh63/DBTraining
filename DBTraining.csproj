@@ -80,6 +80,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="View\DBUpd_view.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\DBAdd_view.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -95,6 +99,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DelegateCommand.cs" />
+    <Compile Include="View\DBUpd_view.xaml.cs">
+      <DependentUpon>DBUpd_view.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\DBAdd_view.xaml.cs">
       <DependentUpon>DBAdd_view.xaml</DependentUpon>
     </Compile>

@@ -19,11 +19,13 @@ namespace DBTraining.ViewModel
     class DBTraining_VM : INotifyPropertyChanged
     {
         DBAdd_view dbadd;
+        DBUpd_view dbupd;
         public DBTraining_VM()
         {
             LoadDB_Command = new DelegateCommand(LoadDB);
-            RowDel_Command = new DelegateCommand(RowDel);
             RowAdd_Command = new DelegateCommand(RowAdd);
+            RowUpd_Command = new DelegateCommand(RowUpd);
+            RowDel_Command = new DelegateCommand(RowDel);
         }
 
         private ObservableCollection<DBTraining_Model> peoples =
@@ -48,36 +50,7 @@ namespace DBTraining.ViewModel
                 OnPropertyChanged("SelectedItem");
             }
         }
-        
-        public DelegateCommand RowAdd_Command { get; set; }
-        private void RowAdd(object obj)
-        {
-            dbadd = new DBAdd_view();
-            dbadd.ShowDialog();
-            LoadDB(obj);
-        }
-        public DelegateCommand RowDel_Command { get; set; }
-        private void RowDel(object obj)
-        {
-            string oradb = "User ID=ONLYBBQ;Data Source=localhost:1521/XEPDB1;Password=PSWRD123;";
-            OracleConnection con = new OracleConnection();
-            con.ConnectionString = oradb;
-            con.Open();
-            OracleCommand cmd = new OracleCommand();
-            if (SelectedItem != null)
-                cmd.CommandText = "delete from example where people_id=" + selectedItem.ID;
-            else
-            { 
-                MessageBox.Show("Не выбрано строки для удаления");
-                return;
-            }
-            cmd.Connection = con;
-            OracleDataReader dr = cmd.ExecuteReader();
-            con.Close();
-            con.Dispose();
 
-            LoadDB(obj);
-        }
         public DelegateCommand LoadDB_Command { get; set; }
         private void LoadDB(object obj)
         {
@@ -112,6 +85,44 @@ namespace DBTraining.ViewModel
             con.Close();
             con.Dispose();
         }
+        public DelegateCommand RowAdd_Command { get; set; }
+        private void RowAdd(object obj)
+        {
+            dbadd = new DBAdd_view();
+            dbadd.ShowDialog();
+            LoadDB(obj);
+        }
+        public DelegateCommand RowUpd_Command { get; set; }
+
+        private void RowUpd(object obj)
+        {
+            dbupd = new DBUpd_view();
+            dbupd.ShowDialog();
+            LoadDB(obj);
+        }
+        public DelegateCommand RowDel_Command { get; set; }
+        private void RowDel(object obj)
+        {
+            string oradb = "User ID=ONLYBBQ;Data Source=localhost:1521/XEPDB1;Password=PSWRD123;";
+            OracleConnection con = new OracleConnection();
+            con.ConnectionString = oradb;
+            con.Open();
+            OracleCommand cmd = new OracleCommand();
+            if (SelectedItem != null)
+                cmd.CommandText = "delete from example where people_id=" + selectedItem.ID;
+            else
+            { 
+                MessageBox.Show("Не выбрано строки для удаления");
+                return;
+            }
+            cmd.Connection = con;
+            OracleDataReader dr = cmd.ExecuteReader();
+            con.Close();
+            con.Dispose();
+
+            LoadDB(obj);
+        }
+
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged(string propertyName)

@@ -22,7 +22,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <DataGrid Grid.Row="0" ItemsSource="{Binding Peoples}" AutoGenerateColumns="False" SelectedItem="{Binding SelectedItem}">
+        <DataGrid Grid.Row="0" ItemsSource="{Binding Peoples}" AutoGenerateColumns="False" SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ФИО" Binding="{Binding Fio}"/>
                 <DataGridTextColumn Header="Возраст" Binding="{Binding Age}"/>
@@ -34,8 +34,8 @@
         <StackPanel Orientation="Horizontal" Grid.Row="1" >
             <Button Content="Загрузить" Command="{Binding LoadDB_Command}"/>
             <Button Content="Добавить" Command="{Binding RowAdd_Command}"/>
+            <Button Content="Обновить" Command="{Binding RowUpd_Command}"/>
             <Button Content="Удалить" Command="{Binding RowDel_Command}"/>
-
         </StackPanel> 
     </Grid>
 </Window>

@@ -15,34 +15,41 @@ using System.Text.RegularExpressions;
 using Oracle.ManagedDataAccess.Client;
 using Oracle.ManagedDataAccess.Types;
 using DBTraining.Model;
+using DBTraining.ViewModel;
 
 namespace DBTraining.View
 {
     /// <summary>
     /// Логика взаимодействия для DBAdd_view.xaml
     /// </summary>
-    public partial class DBAdd_view : Window
+    public partial class DBUpd_view : Window
     {
-        public DBAdd_view()
+        DBTraining_VM dbtm = new DBTraining_VM();
+        public DBUpd_view()
         {
             InitializeComponent();
+            Load();
         }
-
+        private void Load()
+        {
+            textFio.Text = dbtm.SelectedItem.Fio;
+        }
         private void OKButton_Click(object sender, RoutedEventArgs e)
         {
             string oradb = "User ID=ONLYBBQ;Data Source=localhost:1521/XEPDB1;Password=PSWRD123;";
-            string insertQuery = "insert into example values (:fio,:age,:adress, Current_TIMESTAMP, people_seq.NEXTVAL)";
+            string updateQuery = "Update example set fio=:fio,age=:age,adress=:adress,datetime=:datetime,people_id=people_seq.NEXTVAL)";
             OracleConnection con = new OracleConnection();
             con.ConnectionString = oradb;
             con.Open();
             OracleCommand cmd = new OracleCommand
             {
-                CommandText = insertQuery,
+                CommandText = updateQuery,
                 Connection = con
             };
-
+            
             try
             {
+                
                 cmd.Parameters.Add(new OracleParameter("fio", OracleDbType.NVarchar2, textFio.Text, System.Data.ParameterDirection.Input));
                 cmd.Parameters.Add(new OracleParameter("age", OracleDbType.Int32, textAge.Text, System.Data.ParameterDirection.Input));
                 cmd.Parameters.Add(new OracleParameter("adress", OracleDbType.NVarchar2, textAdress.Text, System.Data.ParameterDirection.Input));
