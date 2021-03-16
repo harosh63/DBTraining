@@ -31,7 +31,7 @@ namespace DBTraining.View
         private void OKButton_Click(object sender, RoutedEventArgs e)
         {
             string oradb = "User ID=ONLYBBQ;Data Source=localhost:1521/XEPDB1;Password=PSWRD123;";
-            string insertQuery = "insert into example values (:fio,:age,:adress, Current_TIMESTAMP, people_seq.NEXTVAL)";
+            string insertQuery = "insert into example values (:fio,:age,:adress, :datetime, people_seq.NEXTVAL)";
             OracleConnection con = new OracleConnection();
             con.ConnectionString = oradb;
             con.Open();

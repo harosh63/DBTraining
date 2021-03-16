@@ -28,16 +28,12 @@ namespace DBTraining.View
         public DBUpd_view()
         {
             InitializeComponent();
-            Load();
         }
-        private void Load()
-        {
-            textFio.Text = dbtm.SelectedItem.Fio;
-        }
+
         private void OKButton_Click(object sender, RoutedEventArgs e)
         {
             string oradb = "User ID=ONLYBBQ;Data Source=localhost:1521/XEPDB1;Password=PSWRD123;";
-            string updateQuery = "Update example set fio=:fio,age=:age,adress=:adress,datetime=:datetime,people_id=people_seq.NEXTVAL)";
+            string updateQuery = "Update example set fio=:fio,age=:age,adress=:adress,datetime=:datetime where people_id=" + textID.Content;
             OracleConnection con = new OracleConnection();
             con.ConnectionString = oradb;
             con.Open();
@@ -46,19 +42,11 @@ namespace DBTraining.View
                 CommandText = updateQuery,
                 Connection = con
             };
-            
-            try
-            {
-                
-                cmd.Parameters.Add(new OracleParameter("fio", OracleDbType.NVarchar2, textFio.Text, System.Data.ParameterDirection.Input));
-                cmd.Parameters.Add(new OracleParameter("age", OracleDbType.Int32, textAge.Text, System.Data.ParameterDirection.Input));
-                cmd.Parameters.Add(new OracleParameter("adress", OracleDbType.NVarchar2, textAdress.Text, System.Data.ParameterDirection.Input));
-                cmd.Parameters.Add(new OracleParameter("datetime", OracleDbType.TimeStamp, textDatetime.DisplayDate, System.Data.ParameterDirection.Input));
-            }
-            catch
-            {
-                OracleException exp;
-            }
+
+            cmd.Parameters.Add(new OracleParameter("fio", OracleDbType.NVarchar2, textFio.Text, System.Data.ParameterDirection.Input));
+            cmd.Parameters.Add(new OracleParameter("age", OracleDbType.Int32, textAge.Text, System.Data.ParameterDirection.Input));
+            cmd.Parameters.Add(new OracleParameter("adress", OracleDbType.NVarchar2, textAdress.Text, System.Data.ParameterDirection.Input));
+            cmd.Parameters.Add(new OracleParameter("datetime", OracleDbType.TimeStamp, textDatetime.DisplayDate, System.Data.ParameterDirection.Input));
             OracleDataReader dr = cmd.ExecuteReader();
             con.Close();
             con.Dispose();

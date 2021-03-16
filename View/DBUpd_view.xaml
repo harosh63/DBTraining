@@ -23,6 +23,7 @@
             <TextBox x:Name="textAdress" MaxLength="40"/>
             <Label Content="Дата"/>
             <DatePicker Name="textDatetime" SelectedDateFormat="Short"/>
+            <Label x:Name="textID"/>
         </StackPanel>
         <Button Content="ОК" Margin="50,181,132,16" Click="OKButton_Click" IsDefault="True"/>
         <Button Content="Отмена" Margin="132,181,50,16" IsCancel="True"/>

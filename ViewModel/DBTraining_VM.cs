@@ -93,10 +93,14 @@ namespace DBTraining.ViewModel
             LoadDB(obj);
         }
         public DelegateCommand RowUpd_Command { get; set; }
-
         private void RowUpd(object obj)
         {
             dbupd = new DBUpd_view();
+            dbupd.textFio.Text = this.SelectedItem.Fio;
+            dbupd.textAge.Text = this.SelectedItem.Age.ToString();
+            dbupd.textAdress.Text = this.SelectedItem.Adress;
+            dbupd.textDatetime.SelectedDate = this.SelectedItem.Date;
+            dbupd.textID.Content = "ID " + this.SelectedItem.ID;
             dbupd.ShowDialog();
             LoadDB(obj);
         }
