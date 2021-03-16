@@ -7,7 +7,7 @@
         xmlns:viewmodel="clr-namespace:DBTraining.ViewModel"
         xmlns:model="clr-namespace:DBTraining.Model"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" WindowStartupLocation="CenterScreen">
+        Title="Взаимодействие C# и СУБД Oracle" Height="450" Width="800" WindowStartupLocation="CenterScreen">
 
     <Window.Resources>
         <Style TargetType="Button">

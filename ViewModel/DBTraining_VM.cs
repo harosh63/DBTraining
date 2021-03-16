@@ -100,7 +100,7 @@ namespace DBTraining.ViewModel
             dbupd.textAge.Text = this.SelectedItem.Age.ToString();
             dbupd.textAdress.Text = this.SelectedItem.Adress;
             dbupd.textDatetime.SelectedDate = this.SelectedItem.Date;
-            dbupd.textID.Content = "ID " + this.SelectedItem.ID;
+            dbupd.textID.Content = this.SelectedItem.ID;
             dbupd.ShowDialog();
             LoadDB(obj);
         }
